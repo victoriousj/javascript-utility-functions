@@ -1,10 +1,6 @@
-const urls = Array.prototype.map.call(
-  document.querySelectorAll("img"),
-  v => v.src
-);
-
-const toDataURI = (url, callback) => {
+var toDataURI = (url, callback) => {
   var filename = url.substring(url.lastIndexOf("/") + 1).replace(":", "");
+  console.log(filename);
   var xhr = new XMLHttpRequest();
   xhr.onload = function() {
     var reader = new FileReader();
@@ -18,14 +14,23 @@ const toDataURI = (url, callback) => {
   xhr.send();
 };
 
-const download = (canvas, filename) => {
+var download = (canvas, filename) => {
   let anchor = document.createElement("a");
   anchor.href = canvas;
   anchor.download = filename;
   anchor.click();
 };
 
-urls.forEach(url => toDataURI(url, download));
+var urls = Array.prototype.map.call(
+  document.querySelectorAll("img"),
+  v => v.src
+);
+
+urls.forEach((url, i) => {
+  setTimeout(() => {
+    toDataURI(url, download);
+  }, i * 2000);
+});
 
 // var downloadImage = url => {
 //   let anchor = document.createElement("a");
