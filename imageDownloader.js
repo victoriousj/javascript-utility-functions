@@ -1,29 +1,34 @@
 var toDataURI = (url, callback) => {
-  var filename = url.substring(url.lastIndexOf("/") + 1).replace(":", "");
+  var filename = url
+    .substring(url.lastIndexOf("/") + 1)
+    .replace(":", "")
+    .replace(/(.*?(?:jpg|png|jpeg))|.*/gm, "$1");
+
   console.log(filename);
+
   var xhr = new XMLHttpRequest();
-  xhr.onload = function() {
+  xhr.onload = () => {
     var reader = new FileReader();
-    reader.onloadend = function() {
-      callback(reader.result, filename);
-    };
+    reader.onloadend = () => callback(reader.result, filename);
     reader.readAsDataURL(xhr.response);
   };
+
   xhr.open("GET", url);
   xhr.responseType = "blob";
+
   xhr.send();
 };
 
 var download = (canvas, filename) => {
   let anchor = document.createElement("a");
-  anchor.href = canvas;
   anchor.download = filename;
+  anchor.href = canvas;
   anchor.click();
 };
 
 var urls = Array.prototype.map.call(
   document.querySelectorAll("img"),
-  v => v.src
+  img => img.src
 );
 
 urls.forEach((url, i) => {
