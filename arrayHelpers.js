@@ -3,18 +3,17 @@ const areIdentical = arr => arr.every(v => v === arr[0]);
 const areSortedNumbers = arr => arr.every((v, i, a) => !i || a[i - 1] <= v);
 
 const shuffleArr = arr => {
-  let swapIndex = arr.length;
-  let temp, randomIndex;
+  const newArr = [];
+  const copy = [...arr];
 
-  while (swapIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * swapIndex);
-
-    swapIndex -= 1;
-
-    temp = arr[swapIndex];
-    arr[swapIndex] = arr[randomIndex];
-    arr[randomIndex] = temp;
+  while (arr.length) {
+    const i = Math.floor(Math.random() * arr.length);
+    newArr.push(arr.splice(i, 1)[0]);
   }
 
-  return arr;
+  console.log(arr);
+  arr = copy;
+  console.log("copy", copy);
+  console.log("arr", arr);
+  return newArr;
 };

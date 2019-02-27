@@ -1,7 +1,5 @@
 var toDataURI = (url, callback, i) => {
-  var filename = i + ".jpg";
-
-  console.log(filename);
+  var filename = i + "." + url.split('.').pop();
 
   var xhr = new XMLHttpRequest();
   xhr.onload = () => {
@@ -23,27 +21,12 @@ var download = (canvas, filename) => {
   anchor.click();
 };
 
-// var urls = Array.prototype.map.call(
-//   document.querySelectorAll("img"),
-//   img => img.src
-// );
+var imageNodes = document.querySelectorAll('img');
+var imageSrcArr = [];
+imageNodes.forEach(x => imageSrcArr.push(x.src));
 
-var getUrlsToDownload = (x = 1) => {
-  var urlWithoutExtension = (url = window.location.href) =>
-    url.slice(0, url.indexOf(url.substring(url.lastIndexOf("/") + 1)));
 
-  var produceUrlArr = baseUrl => {
-    var urls = [];
-    for (let i = 1; i <= x; i++) {
-      urls.push(`${baseUrl}${i}.jpg`);
-    }
-    return urls;
-  };
-
-  return produceUrlArr(urlWithoutExtension());
-};
-
-urls.forEach((url, i) => {
+imageSrcArr.forEach((url, i) => {
   setTimeout(() => {
     toDataURI(url, download, i);
   }, i * 1000);
