@@ -14,4 +14,14 @@
 // fi
 // f
 // prettier-ignore
-f=([c,...r],s=`\n`)=>c?s+f(r,s+c)+s:s;
+f=([c,...r],s=`
+`)=>c?s+f(r,s+c)+s:s;
+
+//expanded verison
+const youTubeComment = function([character, ...remainder], string = "\n") {
+  if (character) {
+    return string + youTubeComment(remainder, string + character) + string;
+  } else {
+    return string;
+  }
+};
